@@ -1,0 +1,9 @@
+---
+- name: Install build dependencies
+  ansible.builtin.import_tasks: dependencies.yml
+
+- name: Download and build Geant4
+  ansible.builtin.import_tasks: build.yml
+
+- name: Configure the Geant4 environment
+  ansible.builtin.import_tasks: environment.yml

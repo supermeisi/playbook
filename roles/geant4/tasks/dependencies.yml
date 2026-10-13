@@ -1,0 +1,20 @@
+---
+- name: Install Geant4 build dependencies
+  ansible.builtin.apt:
+    name:
+      - build-essential
+      - cmake
+      - libexpat1-dev
+      - libxerces-c-dev
+      - libx11-dev
+      - libxmu-dev
+      - libxi-dev
+      - libxext-dev
+      - libxpm-dev
+      - libxft-dev
+      - libxrender-dev
+      - libgl1-mesa-dev
+      - libglu1-mesa-dev
+    state: present
+    update_cache: true
+    cache_valid_time: 3600

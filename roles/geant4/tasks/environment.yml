@@ -1,0 +1,8 @@
+---
+- name: Configure Geant4 environment for login shells
+  ansible.builtin.template:
+    src: geant4.sh.j2
+    dest: /etc/profile.d/geant4.sh
+    owner: root
+    group: root
+    mode: "0644"
