@@ -1,6 +1,7 @@
 ---
 - name: Install Geant4 from source
-  hosts: all
+  hosts: localhost
+  connection: local
   become: true
   roles:
     - geant4
