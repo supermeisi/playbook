@@ -1,0 +1,99 @@
+---
+- name: Install Geant4 from source
+  hosts: all
+  become: true
+
+  vars:
+    geant4_version: "11.3.2"
+    geant4_prefix: "/opt/geant4/{{ geant4_version }}"
+    geant4_source_dir: "/usr/local/src/geant4-{{ geant4_version }}"
+    geant4_build_dir: "/usr/local/src/geant4-{{ geant4_version }}-build"
+    geant4_install_data: true
+    geant4_use_opengl_x11: true
+    geant4_use_gdml: true
+
+  tasks:
+    - name: Install Geant4 build dependencies
+      ansible.builtin.apt:
+        name:
+          - build-essential
+          - cmake
+          - libexpat1-dev
+          - libxerces-c-dev
+          - libx11-dev
+          - libxmu-dev
+          - libxi-dev
+          - libxext-dev
+          - libxpm-dev
+          - libxft-dev
+          - libxrender-dev
+          - libgl1-mesa-dev
+          - libglu1-mesa-dev
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Create Geant4 source parent directory
+      ansible.builtin.file:
+        path: /usr/local/src
+        state: directory
+        mode: "0755"
+
+    - name: Download Geant4 source archive
+      ansible.builtin.get_url:
+        url: "https://github.com/Geant4/geant4/archive/refs/tags/v{{ geant4_version }}.tar.gz"
+        dest: "/usr/local/src/geant4-{{ geant4_version }}.tar.gz"
+        mode: "0644"
+
+    - name: Extract Geant4 source
+      ansible.builtin.unarchive:
+        src: "/usr/local/src/geant4-{{ geant4_version }}.tar.gz"
+        dest: /usr/local/src
+        remote_src: true
+        creates: "{{ geant4_source_dir }}/CMakeLists.txt"
+
+    - name: Create Geant4 build directory
+      ansible.builtin.file:
+        path: "{{ geant4_build_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Configure Geant4
+      ansible.builtin.command:
+        argv:
+          - cmake
+          - "-DCMAKE_INSTALL_PREFIX={{ geant4_prefix }}"
+          - "-DGEANT4_INSTALL_DATA={{ geant4_install_data | ternary('ON', 'OFF') }}"
+          - "-DGEANT4_USE_OPENGL_X11={{ geant4_use_opengl_x11 | ternary('ON', 'OFF') }}"
+          - "-DGEANT4_USE_GDML={{ geant4_use_gdml | ternary('ON', 'OFF') }}"
+          - "{{ geant4_source_dir }}"
+        chdir: "{{ geant4_build_dir }}"
+        creates: "{{ geant4_build_dir }}/CMakeCache.txt"
+
+    - name: Build Geant4
+      ansible.builtin.command:
+        argv:
+          - cmake
+          - --build
+          - .
+          - --parallel
+          - "{{ ansible_processor_vcpus | default(2) }}"
+        chdir: "{{ geant4_build_dir }}"
+        creates: "{{ geant4_prefix }}/bin/geant4.sh"
+
+    - name: Install Geant4
+      ansible.builtin.command:
+        argv:
+          - cmake
+          - --install
+          - "{{ geant4_build_dir }}"
+        creates: "{{ geant4_prefix }}/bin/geant4.sh"
+
+    - name: Configure Geant4 environment for login shells
+      ansible.builtin.copy:
+        dest: /etc/profile.d/geant4.sh
+        content: |
+          . "{{ geant4_prefix }}/bin/geant4.sh"
+        owner: root
+        group: root
+        mode: "0644"
