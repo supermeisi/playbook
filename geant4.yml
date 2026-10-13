@@ -5,9 +5,9 @@
 
   vars:
     geant4_version: "11.3.2"
-    geant4_prefix: "/opt/geant4/{{ geant4_version }}"
-    geant4_source_dir: "/usr/local/src/geant4-{{ geant4_version }}"
-    geant4_build_dir: "/usr/local/src/geant4-{{ geant4_version }}-build"
+    geant4_prefix: "/opt/geant4"
+    geant4_source_dir: "/opt/geant4-{{ geant4_version }}"
+    geant4_build_dir: "/opt/geant4-{{ geant4_version }}-build"
     geant4_install_data: true
     geant4_use_opengl_x11: true
     geant4_use_gdml: true
@@ -33,22 +33,16 @@
         update_cache: true
         cache_valid_time: 3600
 
-    - name: Create Geant4 source parent directory
-      ansible.builtin.file:
-        path: /usr/local/src
-        state: directory
-        mode: "0755"
-
     - name: Download Geant4 source archive
       ansible.builtin.get_url:
         url: "https://github.com/Geant4/geant4/archive/refs/tags/v{{ geant4_version }}.tar.gz"
-        dest: "/usr/local/src/geant4-{{ geant4_version }}.tar.gz"
+        dest: "/opt/geant4-{{ geant4_version }}.tar.gz"
         mode: "0644"
 
     - name: Extract Geant4 source
       ansible.builtin.unarchive:
-        src: "/usr/local/src/geant4-{{ geant4_version }}.tar.gz"
-        dest: /usr/local/src
+        src: "/opt/geant4-{{ geant4_version }}.tar.gz"
+        dest: /opt
         remote_src: true
         creates: "{{ geant4_source_dir }}/CMakeLists.txt"
 
