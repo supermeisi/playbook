@@ -1,0 +1,8 @@
+---
+- name: Configure ROOT environment for login shells
+  ansible.builtin.template:
+    src: root.sh.j2
+    dest: /etc/profile.d/root.sh
+    owner: root
+    group: root
+    mode: "0644"

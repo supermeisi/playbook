@@ -1,0 +1,22 @@
+---
+- name: Install ROOT runtime dependencies
+  ansible.builtin.apt:
+    name:
+      - binutils
+      - cmake
+      - dpkg-dev
+      - g++
+      - gcc
+      - git
+      - libgif-dev
+      - libssl-dev
+      - libtbb-dev
+      - libvdt-dev
+      - libx11-dev
+      - libxext-dev
+      - libxft-dev
+      - libxpm-dev
+      - python3
+    state: present
+    update_cache: true
+    cache_valid_time: 3600

@@ -1,0 +1,21 @@
+---
+- name: Download ROOT binary archive
+  ansible.builtin.get_url:
+    url: "https://root.cern/download/root_v{{ root_version }}.{{ root_platform }}.tar.gz"
+    dest: "{{ root_archive }}"
+    mode: "0644"
+
+- name: Create ROOT installation directory
+  ansible.builtin.file:
+    path: "{{ root_prefix }}"
+    state: directory
+    mode: "0755"
+
+- name: Extract ROOT binary archive
+  ansible.builtin.unarchive:
+    src: "{{ root_archive }}"
+    dest: "{{ root_prefix }}"
+    remote_src: true
+    extra_opts:
+      - --strip-components=1
+    creates: "{{ root_prefix }}/bin/thisroot.sh"

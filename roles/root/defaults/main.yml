@@ -1,0 +1,5 @@
+---
+root_version: "6.40.04"
+root_platform: "Linux-ubuntu26.04-x86_64-gcc15.2"
+root_prefix: "/opt/root"
+root_archive: "/opt/root-{{ root_version }}.tar.gz"
