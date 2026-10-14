@@ -1,7 +1,7 @@
 ---
 root_version: "6.40.04"
 root_source_tag: "v6-40-04"
-root_prefix: "/opt/root"
+root_prefix: "/opt/root/{{ root_version }}"
 root_source_dir: "/opt/root-{{ root_version }}-source"
 root_build_dir: "/opt/root-{{ root_version }}-build"
 root_source_archive: "/opt/root-{{ root_version }}-source.tar.gz"

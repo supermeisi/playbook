@@ -1,6 +1,6 @@
 ---
 geant4_version: "11.3.2"
-geant4_prefix: "/opt/geant4"
+geant4_prefix: "/opt/geant4/{{ geant4_version }}"
 geant4_source_dir: "/opt/geant4-{{ geant4_version }}"
 geant4_build_dir: "/opt/geant4-{{ geant4_version }}-build"
 geant4_install_data: true
