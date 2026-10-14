@@ -1,5 +1,5 @@
 ---
-- name: Install Geant4 from source
+- name: Installation of Geant4 and ROOT
   hosts: localhost
   connection: local
   become: true
