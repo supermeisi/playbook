@@ -1,5 +1,10 @@
 ---
 root_version: "6.40.04"
-root_platform: "Linux-ubuntu26.04-x86_64-gcc15.2"
+root_source_tag: "v6-40-04"
 root_prefix: "/opt/root"
-root_archive: "/opt/root-{{ root_version }}.tar.gz"
+root_source_dir: "/opt/root-{{ root_version }}-source"
+root_build_dir: "/opt/root-{{ root_version }}-build"
+root_source_archive: "/opt/root-{{ root_version }}-source.tar.gz"
+root_source_url: "https://github.com/root-project/root/archive/refs/tags/{{ root_source_tag }}.tar.gz"
+root_build_jobs: 4
+root_build_type: Release

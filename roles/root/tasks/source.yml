@@ -1,0 +1,38 @@
+---
+- name: Download ROOT source archive
+  ansible.builtin.get_url:
+    url: "{{ root_source_url }}"
+    dest: "{{ root_source_archive }}"
+    mode: "0644"
+
+- name: Create ROOT source directory
+  ansible.builtin.file:
+    path: "{{ root_source_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Extract ROOT source
+  ansible.builtin.unarchive:
+    src: "{{ root_source_archive }}"
+    dest: "{{ root_source_dir }}"
+    remote_src: true
+    extra_opts:
+      - --strip-components=1
+    creates: "{{ root_source_dir }}/CMakeLists.txt"
+
+- name: Create ROOT build directory
+  ansible.builtin.file:
+    path: "{{ root_build_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Configure ROOT build
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - -S
+      - "{{ root_source_dir }}"
+      - -B
+      - "{{ root_build_dir }}"
+      - "-DCMAKE_INSTALL_PREFIX={{ root_prefix }}"
+      - "-DCMAKE_BUILD_TYPE={{ root_build_type }}"

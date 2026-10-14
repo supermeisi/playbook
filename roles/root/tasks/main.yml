@@ -2,8 +2,11 @@
 - name: Install ROOT dependencies
   ansible.builtin.import_tasks: dependencies.yml
 
-- name: Install ROOT binary
-  ansible.builtin.import_tasks: install.yml
+- name: Download ROOT source and configure the build
+  ansible.builtin.import_tasks: source.yml
+
+- name: Build and install ROOT
+  ansible.builtin.import_tasks: build.yml
 
 - name: Configure the ROOT environment
   ansible.builtin.import_tasks: environment.yml

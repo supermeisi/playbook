@@ -1,0 +1,16 @@
+---
+- name: Build ROOT from source
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - --build
+      - "{{ root_build_dir }}"
+      - --parallel
+      - "{{ root_build_jobs | string }}"
+
+- name: Install ROOT
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - --install
+      - "{{ root_build_dir }}"
