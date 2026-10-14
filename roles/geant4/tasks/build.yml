@@ -35,11 +35,9 @@
     argv:
       - cmake
       - --build
-      - .
+      - "{{ geant4_build_dir }}"
       - --parallel
       - "{{ ansible_processor_vcpus | default(2) }}"
-    chdir: "{{ geant4_build_dir }}"
-    creates: "{{ geant4_prefix }}/bin/geant4.sh"
 
 - name: Install Geant4
   ansible.builtin.command:
@@ -47,4 +45,3 @@
       - cmake
       - --install
       - "{{ geant4_build_dir }}"
-    creates: "{{ geant4_prefix }}/bin/geant4.sh"
