@@ -37,7 +37,7 @@
       - --build
       - "{{ geant4_build_dir }}"
       - --parallel
-      - "{{ ansible_processor_vcpus | default(2) }}"
+      - "{{ ansible_facts['processor_vcpus'] | default(2) }}"
 
 - name: Install Geant4
   ansible.builtin.command:
