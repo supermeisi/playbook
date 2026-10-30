@@ -5,6 +5,6 @@
   become: true
   roles:
     - role: geant4
-      tag: geant4
+      tags: [geant4]
     - role: root
-      tag: root
+      tags: [root]
