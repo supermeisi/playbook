@@ -1,9 +1,16 @@
 ---
+- name: Check for cached ROOT archive
+  ansible.builtin.stat:
+    path: "{{ root_source_archive }}"
+    get_checksum: false
+  register: root_archive
+
 - name: Download ROOT source archive
   ansible.builtin.get_url:
     url: "{{ root_source_url }}"
     dest: "{{ root_source_archive }}"
     mode: "0644"
+  when: not root_archive.stat.exists
 
 - name: Create ROOT source directory
   ansible.builtin.file:
