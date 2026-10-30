@@ -7,3 +7,9 @@
 
 - name: Configure the Geant4 environment
   ansible.builtin.import_tasks: environment.yml
+
+- name: Clean Geant4 build directory
+  ansible.builtin.file:
+    path: "{{ geant4_build_dir }}"
+    state: absent
+  when: geant4_clean_build | default(false) | bool
