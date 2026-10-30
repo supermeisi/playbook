@@ -25,6 +25,8 @@
       - "-DCMAKE_INSTALL_PREFIX={{ geant4_prefix }}"
       - "-DGEANT4_INSTALL_DATA={{ geant4_install_data | ternary('ON', 'OFF') }}"
       - "-DGEANT4_USE_OPENGL_X11={{ geant4_use_opengl_x11 | ternary('ON', 'OFF') }}"
+      - "-DGEANT4_USE_QT={{ geant4_use_qt | ternary('ON', 'OFF') }}"
+      - "-DGEANT4_BUILD_MULTITHREADED={{ geant4_build_multithreaded | ternary('ON', 'OFF') }}"
       - "-DGEANT4_USE_GDML={{ geant4_use_gdml | ternary('ON', 'OFF') }}"
       - "{{ geant4_source_dir }}"
     chdir: "{{ geant4_build_dir }}"
