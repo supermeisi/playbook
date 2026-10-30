@@ -10,3 +10,9 @@
 
 - name: Configure the ROOT environment
   ansible.builtin.import_tasks: environment.yml
+
+- name: Clean ROOT build directory
+  ansible.builtin.file:
+    path: "{{ root_build_dir }}"
+    state: absent
+  when: root_clean_build | default(false) | bool
