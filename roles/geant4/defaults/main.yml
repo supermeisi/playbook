@@ -5,4 +5,6 @@ geant4_source_dir: "/opt/geant4-{{ geant4_version }}"
 geant4_build_dir: "/opt/geant4-{{ geant4_version }}-build"
 geant4_install_data: true
 geant4_use_opengl_x11: true
+geant4_use_qt: true
+geant4_build_multithreaded: true
 geant4_use_gdml: true
