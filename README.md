@@ -20,12 +20,16 @@ Geant4 and ROOT each use a dedicated directory under `/opt`:
 
 | Contents | ROOT | Geant4 |
 | --- | --- | --- |
-| Source code | `/opt/root/source` | `/opt/geant4/source` |
-| Build files | `/opt/root/build` | `/opt/geant4/build` |
-| Installation | `/opt/root/install` | `/opt/geant4/install` |
+| Source code | `/opt/root/root-6.40.04-source` | `/opt/geant4/geant4-11.3.2-source` |
+| Build files | `/opt/root/root-6.40.04-build` | `/opt/geant4/geant4-11.3.2-build` |
+| Installation | `/opt/root/root-6.40.04-install` | `/opt/geant4/geant4-11.3.2-install` |
 
 Downloaded source archives are cached directly in `/opt/root` and `/opt/geant4`.
-The login-shell environment scripts use the new `install` directories.
+Each subfolder includes the package name and its configured version. The names
+follow `root_version` and `geant4_version`, keeping different versions in
+separate source, build and installation directories.
+The login-shell environment scripts load the installation selected by the
+playbook.
 Override `root_base_dir` or `geant4_base_dir` to use another base location.
 
 To build and install both packages using this layout:
@@ -36,9 +40,6 @@ ansible-playbook playbook.yml --ask-become-pass --tags geant4,root
 
 On machines using the earlier layout, this builds into the new directories.
 Existing source, build and installation trees are not moved or deleted.
-Each new layout holds one version. Before changing the version variables,
-use fresh source and build directories to avoid reusing the previous sources
-and CMake cache.
 
 The `zoom` role installs the `flatpak` and `ca-certificates` packages, adds
 Flathub system-wide, and installs `us.zoom.Zoom` with its required Flatpak

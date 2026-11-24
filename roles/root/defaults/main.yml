@@ -2,9 +2,9 @@
 root_version: "6.40.04"
 root_source_tag: "v6-40-04"
 root_base_dir: /opt/root
-root_prefix: "{{ root_base_dir }}/install"
-root_source_dir: "{{ root_base_dir }}/source"
-root_build_dir: "{{ root_base_dir }}/build"
+root_prefix: "{{ root_base_dir }}/root-{{ root_version }}-install"
+root_source_dir: "{{ root_base_dir }}/root-{{ root_version }}-source"
+root_build_dir: "{{ root_base_dir }}/root-{{ root_version }}-build"
 root_source_archive: "{{ root_base_dir }}/root-{{ root_version }}-source.tar.gz"
 root_source_url: "https://github.com/root-project/root/archive/refs/tags/{{ root_source_tag }}.tar.gz"
 root_build_jobs: 4
