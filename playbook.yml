@@ -1,5 +1,5 @@
 ---
-- name: Installation of Geant4 and ROOT
+- name: Installation of Geant4, ROOT and Zoom
   hosts: localhost
   connection: local
   become: true
@@ -8,3 +8,5 @@
       tags: [geant4]
     - role: root
       tags: [root]
+    - role: zoom
+      tags: [zoom]
