@@ -1,8 +1,10 @@
 ---
 geant4_version: "11.3.2"
-geant4_prefix: "/opt/geant4/{{ geant4_version }}"
-geant4_source_dir: "/opt/geant4-{{ geant4_version }}"
-geant4_build_dir: "/opt/geant4-{{ geant4_version }}-build"
+geant4_base_dir: /opt/geant4
+geant4_prefix: "{{ geant4_base_dir }}/install"
+geant4_source_dir: "{{ geant4_base_dir }}/source"
+geant4_build_dir: "{{ geant4_base_dir }}/build"
+geant4_source_archive: "{{ geant4_base_dir }}/geant4-{{ geant4_version }}.tar.gz"
 geant4_install_data: true
 geant4_use_opengl_x11: true
 geant4_use_qt: true

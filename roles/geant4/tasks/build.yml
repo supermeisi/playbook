@@ -1,29 +1,36 @@
 ---
+- name: Create Geant4 directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ geant4_base_dir }}"
+    - "{{ geant4_source_dir }}"
+    - "{{ geant4_build_dir }}"
+    - "{{ geant4_prefix }}"
+
 - name: Check for cached Geant4 archive
   ansible.builtin.stat:
-    path: "/opt/geant4-{{ geant4_version }}.tar.gz"
+    path: "{{ geant4_source_archive }}"
     get_checksum: false
   register: geant4_archive
 
 - name: Download Geant4 source archive
   ansible.builtin.get_url:
     url: "https://github.com/Geant4/geant4/archive/refs/tags/v{{ geant4_version }}.tar.gz"
-    dest: "/opt/geant4-{{ geant4_version }}.tar.gz"
+    dest: "{{ geant4_source_archive }}"
     mode: "0644"
   when: not geant4_archive.stat.exists
 
 - name: Extract Geant4 source
   ansible.builtin.unarchive:
-    src: "/opt/geant4-{{ geant4_version }}.tar.gz"
-    dest: /opt
+    src: "{{ geant4_source_archive }}"
+    dest: "{{ geant4_source_dir }}"
     remote_src: true
+    extra_opts:
+      - --strip-components=1
     creates: "{{ geant4_source_dir }}/CMakeLists.txt"
-
-- name: Create Geant4 build directory
-  ansible.builtin.file:
-    path: "{{ geant4_build_dir }}"
-    state: directory
-    mode: "0755"
 
 - name: Configure Geant4
   ansible.builtin.command:
