@@ -1,18 +1,20 @@
 ---
-- name: Installation of Geant4, ROOT, Zoom, ZapZap, Telegram and Teams
+- name: Installation of Geant4, ROOT, Zoom, ZapZap, Telegram, Teams and Discord
   hosts: localhost
   connection: local
   become: true
   roles:
     - role: geant4
-      tags: [geant4]
+      tags: [geant4, hep]
     - role: root
-      tags: [root]
+      tags: [root, hep]
     - role: zoom
-      tags: [zoom]
+      tags: [zoom, video, communication, flatpak]
     - role: zapzap
-      tags: [zapzap]
+      tags: [zapzap, video, communication, flatpak]
     - role: telegram
-      tags: [telegram]
+      tags: [telegram, video, communication, flatpak]
     - role: teams
-      tags: [teams]
+      tags: [teams, video, communication, flatpak]
+    - role: discord
+      tags: [discord, flatpak, video, communication]

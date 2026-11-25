@@ -1,0 +1,4 @@
+---
+discord_flatpak_app_id: com.discordapp.Discord
+discord_flatpak_remote: flathub
+discord_flatpak_repo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
