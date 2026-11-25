@@ -1,9 +1,9 @@
 # Local software installation
 
-This Ansible project installs Geant4, ROOT, Zoom, ZapZap, Telegram, Teams and
-Discord on the local Ubuntu/Debian machine. Ansible must already be installed.
-Run the commands below from this directory. The project uses only built-in
-Ansible modules.
+This Ansible project installs Geant4, ROOT, Zoom, ZapZap, Telegram, Teams,
+Discord and Mattermost on the local Ubuntu/Debian machine. Ansible must already
+be installed. Run the commands below from this directory. The project uses only
+built-in Ansible modules.
 
 Install only Zoom:
 
@@ -35,7 +35,14 @@ Install only Discord:
 ansible-playbook playbook.yml --ask-become-pass --tags discord
 ```
 
-Install all software, including Zoom, ZapZap, Telegram, Teams and Discord:
+Install only Mattermost:
+
+```bash
+ansible-playbook playbook.yml --ask-become-pass --tags mattermost
+```
+
+Install all software, including Zoom, ZapZap, Telegram, Teams, Discord and
+Mattermost:
 
 ```bash
 ansible-playbook playbook.yml --ask-become-pass
@@ -66,15 +73,15 @@ ansible-playbook playbook.yml --ask-become-pass --tags geant4,root
 On machines using the earlier layout, this builds into the new directories.
 Existing source, build and installation trees are not moved or deleted.
 
-The `zoom`, `zapzap`, `telegram`, `teams` and `discord` roles install the `flatpak` and
-`ca-certificates` packages, add Flathub system-wide, and install `us.zoom.Zoom`,
-`com.rtosta.zapzap`, `org.telegram.desktop` and
-`com.github.IsmaelMartinez.teams_for_linux` and `com.discordapp.Discord` with
-their required Flatpak runtimes for all users. The Teams app is the
-community-maintained Teams for Linux client, not an official Microsoft Linux
-application. Built-in
-command tasks check configured remotes and installed application IDs before
-making changes, so repeated runs keep an existing installation in place.
+The `zoom`, `zapzap`, `telegram`, `teams`, `discord` and `mattermost` roles
+install the `flatpak` and `ca-certificates` packages, add Flathub system-wide,
+and install `us.zoom.Zoom`, `com.rtosta.zapzap`, `org.telegram.desktop`,
+`com.github.IsmaelMartinez.teams_for_linux`, `com.discordapp.Discord` and
+`com.mattermost.Desktop` with their required Flatpak runtimes for all users.
+The Teams app is the community-maintained Teams for Linux client, not an
+official Microsoft Linux application. Built-in command tasks check configured
+remotes and installed application IDs before making changes, so repeated runs
+keep an existing installation in place.
 Each app ID, remote name and repository URL can be overridden using the
 variables in its role's `defaults/main.yml`.
 
@@ -116,6 +123,13 @@ command as your regular desktop user:
 flatpak run com.discordapp.Discord
 ```
 
+After installation, open Mattermost from the desktop application menu or run
+this command as your regular desktop user:
+
+```bash
+flatpak run com.mattermost.Desktop
+```
+
 The role installs Zoom only when its application ID is absent from the system
 installation. To update Zoom later:
 
@@ -145,4 +159,10 @@ To update Discord later:
 
 ```bash
 sudo flatpak update --system com.discordapp.Discord
+```
+
+To update Mattermost later:
+
+```bash
+sudo flatpak update --system com.mattermost.Desktop
 ```

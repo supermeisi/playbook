@@ -1,5 +1,5 @@
 ---
-- name: Installation of Geant4, ROOT, Zoom, ZapZap, Telegram, Teams and Discord
+- name: Software installation and configuration playbook
   hosts: localhost
   connection: local
   become: true
@@ -18,3 +18,5 @@
       tags: [teams, video, communication, flatpak]
     - role: discord
       tags: [discord, flatpak, video, communication]
+    - role: mattermost
+      tags: [mattermost, flatpak, communication]

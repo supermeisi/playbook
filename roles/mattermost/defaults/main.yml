@@ -1,0 +1,4 @@
+---
+mattermost_flatpak_app_id: com.mattermost.Desktop
+mattermost_flatpak_remote: flathub
+mattermost_flatpak_repo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
