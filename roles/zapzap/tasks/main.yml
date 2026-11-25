@@ -1,0 +1,55 @@
+---
+- name: Install Flatpak dependencies
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - flatpak
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: List system Flatpak remotes
+  ansible.builtin.command:
+    argv:
+      - flatpak
+      - remotes
+      - --system
+      - --columns=name
+  register: zapzap_flatpak_remotes
+  changed_when: false
+
+- name: Add Flathub to the system installation
+  ansible.builtin.command:
+    argv:
+      - flatpak
+      - remote-add
+      - --system
+      - --if-not-exists
+      - "{{ zapzap_flatpak_remote }}"
+      - "{{ zapzap_flatpak_repo_url }}"
+  when: zapzap_flatpak_remote not in (zapzap_flatpak_remotes.stdout_lines | default([]))
+  changed_when: true
+
+- name: List system Flatpak applications
+  ansible.builtin.command:
+    argv:
+      - flatpak
+      - list
+      - --system
+      - --app
+      - --columns=application
+  register: zapzap_flatpak_apps
+  changed_when: false
+
+- name: Install ZapZap for all users via Flatpak
+  ansible.builtin.command:
+    argv:
+      - flatpak
+      - install
+      - --system
+      - --noninteractive
+      - --assumeyes
+      - "{{ zapzap_flatpak_remote }}"
+      - "{{ zapzap_flatpak_app_id }}"
+  when: zapzap_flatpak_app_id not in (zapzap_flatpak_apps.stdout_lines | default([]))
+  changed_when: true
