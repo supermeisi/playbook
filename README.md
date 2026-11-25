@@ -1,6 +1,6 @@
 # Local software installation
 
-This Ansible project installs Geant4, ROOT, Zoom and ZapZap on the local
+This Ansible project installs Geant4, ROOT, Zoom, ZapZap and Telegram on the local
 Ubuntu/Debian machine. Ansible must already be installed. Run the commands below
 from this directory. The project uses only built-in Ansible modules.
 
@@ -16,7 +16,13 @@ Install only ZapZap:
 ansible-playbook playbook.yml --ask-become-pass --tags zapzap
 ```
 
-Install all software, including Zoom and ZapZap:
+Install only Telegram:
+
+```bash
+ansible-playbook playbook.yml --ask-become-pass --tags telegram
+```
+
+Install all software, including Zoom, ZapZap and Telegram:
 
 ```bash
 ansible-playbook playbook.yml --ask-become-pass
@@ -47,9 +53,10 @@ ansible-playbook playbook.yml --ask-become-pass --tags geant4,root
 On machines using the earlier layout, this builds into the new directories.
 Existing source, build and installation trees are not moved or deleted.
 
-The `zoom` and `zapzap` roles install the `flatpak` and `ca-certificates`
-packages, add Flathub system-wide, and install `us.zoom.Zoom` and
-`com.rtosta.zapzap` with their required Flatpak runtimes for all users. Built-in
+The `zoom`, `zapzap` and `telegram` roles install the `flatpak` and
+`ca-certificates` packages, add Flathub system-wide, and install `us.zoom.Zoom`,
+`com.rtosta.zapzap` and `org.telegram.desktop` with their required Flatpak
+runtimes for all users. Built-in
 command tasks check configured remotes and installed application IDs before
 making changes, so repeated runs keep an existing installation in place.
 Each app ID, remote name and repository URL can be overridden using the
@@ -72,6 +79,13 @@ command as your regular desktop user:
 flatpak run com.rtosta.zapzap
 ```
 
+After installation, open Telegram from the desktop application menu or run this
+command as your regular desktop user:
+
+```bash
+flatpak run org.telegram.desktop
+```
+
 The role installs Zoom only when its application ID is absent from the system
 installation. To update Zoom later:
 
@@ -83,4 +97,10 @@ To update ZapZap later:
 
 ```bash
 sudo flatpak update --system com.rtosta.zapzap
+```
+
+To update Telegram later:
+
+```bash
+sudo flatpak update --system org.telegram.desktop
 ```

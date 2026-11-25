@@ -1,0 +1,4 @@
+---
+telegram_flatpak_app_id: org.telegram.desktop
+telegram_flatpak_remote: flathub
+telegram_flatpak_repo_url: https://dl.flathub.org/repo/flathub.flatpakrepo

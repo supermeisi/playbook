@@ -1,5 +1,5 @@
 ---
-- name: Installation of Geant4, ROOT, Zoom and ZapZap
+- name: Installation of Geant4, ROOT, Zoom, ZapZap and Telegram
   hosts: localhost
   connection: local
   become: true
@@ -12,3 +12,5 @@
       tags: [zoom]
     - role: zapzap
       tags: [zapzap]
+    - role: telegram
+      tags: [telegram]
