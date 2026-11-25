@@ -1,8 +1,9 @@
 # Local software installation
 
-This Ansible project installs Geant4, ROOT, Zoom, ZapZap and Telegram on the local
-Ubuntu/Debian machine. Ansible must already be installed. Run the commands below
-from this directory. The project uses only built-in Ansible modules.
+This Ansible project installs Geant4, ROOT, Zoom, ZapZap, Telegram and Teams on
+the local Ubuntu/Debian machine. Ansible must already be installed. Run the
+commands below from this directory. The project uses only built-in Ansible
+modules.
 
 Install only Zoom:
 
@@ -22,7 +23,13 @@ Install only Telegram:
 ansible-playbook playbook.yml --ask-become-pass --tags telegram
 ```
 
-Install all software, including Zoom, ZapZap and Telegram:
+Install only Teams:
+
+```bash
+ansible-playbook playbook.yml --ask-become-pass --tags teams
+```
+
+Install all software, including Zoom, ZapZap, Telegram and Teams:
 
 ```bash
 ansible-playbook playbook.yml --ask-become-pass
@@ -53,10 +60,12 @@ ansible-playbook playbook.yml --ask-become-pass --tags geant4,root
 On machines using the earlier layout, this builds into the new directories.
 Existing source, build and installation trees are not moved or deleted.
 
-The `zoom`, `zapzap` and `telegram` roles install the `flatpak` and
+The `zoom`, `zapzap`, `telegram` and `teams` roles install the `flatpak` and
 `ca-certificates` packages, add Flathub system-wide, and install `us.zoom.Zoom`,
-`com.rtosta.zapzap` and `org.telegram.desktop` with their required Flatpak
-runtimes for all users. Built-in
+`com.rtosta.zapzap`, `org.telegram.desktop` and
+`com.github.IsmaelMartinez.teams_for_linux` with their required Flatpak runtimes
+for all users. The Teams app is the community-maintained Teams for Linux client,
+not an official Microsoft Linux application. Built-in
 command tasks check configured remotes and installed application IDs before
 making changes, so repeated runs keep an existing installation in place.
 Each app ID, remote name and repository URL can be overridden using the
@@ -86,6 +95,13 @@ command as your regular desktop user:
 flatpak run org.telegram.desktop
 ```
 
+After installation, launch Teams for Linux from the desktop application menu or
+run this command as your regular desktop user:
+
+```bash
+flatpak run com.github.IsmaelMartinez.teams_for_linux
+```
+
 The role installs Zoom only when its application ID is absent from the system
 installation. To update Zoom later:
 
@@ -103,4 +119,10 @@ To update Telegram later:
 
 ```bash
 sudo flatpak update --system org.telegram.desktop
+```
+
+To update Teams for Linux later:
+
+```bash
+sudo flatpak update --system com.github.IsmaelMartinez.teams_for_linux
 ```

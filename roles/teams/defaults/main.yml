@@ -1,0 +1,4 @@
+---
+teams_flatpak_app_id: com.github.IsmaelMartinez.teams_for_linux
+teams_flatpak_remote: flathub
+teams_flatpak_repo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
