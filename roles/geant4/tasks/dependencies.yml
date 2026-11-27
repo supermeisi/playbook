@@ -18,3 +18,13 @@
     state: present
     update_cache: true
     cache_valid_time: 3600
+
+- name: Install Geant4 Qt dependencies
+  ansible.builtin.apt:
+    name:
+      - qtbase5-dev
+      - libqt5opengl5-dev
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  when: geant4_use_qt | bool
