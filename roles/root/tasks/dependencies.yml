@@ -12,7 +12,11 @@
       - libfreetype-dev
       - libgif-dev
       - libgl1-mesa-dev
+      - libgl2ps-dev
       - libglu1-mesa-dev
+      - libjpeg-dev
+      - liblz4-dev
+      - liblzma-dev
       - libpng-dev
       - libssl-dev
       - libtbb-dev
@@ -22,6 +26,7 @@
       - libxft-dev
       - libxmu-dev
       - libxpm-dev
+      - libzstd-dev
       - python3
       - python3-dev
     state: present
