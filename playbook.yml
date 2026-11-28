@@ -3,6 +3,18 @@
   hosts: localhost
   connection: local
   become: true
+  pre_tasks:
+    - name: Update package cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      tags: [always, update]
+
+    - name: Upgrade Ubuntu packages
+      ansible.builtin.apt:
+        upgrade: dist
+      tags: [always, upgrade]
+
   roles:
     - role: geant4
       tags: [geant4, hep]
