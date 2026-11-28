@@ -43,6 +43,28 @@
       changed_when: "'Nothing to do.' not in flatpak_update.stdout"
       tags: [always, update]
 
+    - name: Install fwupd firmware updater
+      ansible.builtin.apt:
+        name: fwupd
+        state: present
+      tags: [always, update]
+
+    - name: Refresh firmware metadata
+      ansible.builtin.command:
+        cmd: fwupdmgr refresh --force
+      register: firmware_refresh
+      changed_when: firmware_refresh.rc == 0
+      failed_when: firmware_refresh.rc not in [0]
+      tags: [always, update]
+
+    - name: Update firmware
+      ansible.builtin.command:
+        cmd: fwupdmgr update --assume-yes
+      register: firmware_update
+      changed_when: firmware_update.rc == 0
+      failed_when: firmware_update.rc not in [0, 2]
+      tags: [always, update]
+
   roles:
     - role: geant4
       tags: [geant4, hep]
