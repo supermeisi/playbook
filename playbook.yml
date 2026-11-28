@@ -13,7 +13,35 @@
     - name: Upgrade Ubuntu packages
       ansible.builtin.apt:
         upgrade: dist
-      tags: [always, upgrade]
+      tags: [always, update]
+
+    - name: Check whether snap is installed
+      ansible.builtin.stat:
+        path: /usr/bin/snap
+      register: snap_executable
+      tags: [always, update]
+
+    - name: Update Snap packages
+      ansible.builtin.command:
+        cmd: snap refresh
+      when: snap_executable.stat.exists
+      register: snap_refresh
+      changed_when: "'All snaps up to date' not in snap_refresh.stdout"
+      tags: [always, update]
+
+    - name: Check whether Flatpak is installed
+      ansible.builtin.stat:
+        path: /usr/bin/flatpak
+      register: flatpak_executable
+      tags: [always, update]
+
+    - name: Update Flatpak applications
+      ansible.builtin.command:
+        cmd: flatpak update --system --assumeyes
+      when: flatpak_executable.stat.exists
+      register: flatpak_update
+      changed_when: "'Nothing to do.' not in flatpak_update.stdout"
+      tags: [always, update]
 
   roles:
     - role: geant4
