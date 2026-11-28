@@ -10,6 +10,20 @@
         cache_valid_time: 3600
       tags: [always, update]
 
+    - name: Configure pending packages
+      ansible.builtin.command:
+        cmd: dpkg --configure --pending
+      register: dpkg_configure
+      changed_when: dpkg_configure.stdout | length > 0
+      tags: [always, update]
+
+    - name: Fix broken packages
+      ansible.builtin.command:
+        cmd: apt-get --fix-broken install --assume-yes
+      register: fix_broken_packages
+      changed_when: false
+      tags: [always, update]
+
     - name: Upgrade Ubuntu packages
       ansible.builtin.apt:
         upgrade: dist
